@@ -12,3 +12,9 @@ class uneCarte:
     def perdVie(self, attaquant):
         self.vie = self.vie - attaquant.atk
         return self.vie
+
+    def mort(self):
+        if self.vie <= 0 :
+            return True
+        else:
+            return False
