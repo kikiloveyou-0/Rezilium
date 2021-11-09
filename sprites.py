@@ -1,7 +1,7 @@
 import pygame as pygame
 from settings import *
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Spite):
     def __init__(self, game, x, y):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)

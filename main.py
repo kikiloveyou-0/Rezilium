@@ -34,7 +34,7 @@ class Game:
         pygame.quit()
         sys.exit()
 
-    #
+    
     def update(self):
         self.allSprites.update()
 
