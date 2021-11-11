@@ -24,6 +24,8 @@ class Game:
         self.player = Player(self, 10, 10)
         self.door = Door(self, 30, 20)
         self.key = Key(self,20,10)
+        self.camera = Camera(self, 20, 20, "up")
+        self.view = self.camera.View(self, 15, 15)
 
     def run(self):
         self.playing = True
@@ -34,6 +36,8 @@ class Game:
             self.update()
             self.draw()
             self.keySystem()
+            self.detection()
+            
     def quit(self):
         pygame.quit()
         sys.exit()
@@ -77,6 +81,11 @@ class Game:
         if self.keyFound == True:
             pass
 
+    def detection(self):
+        if self.camera.x <= self.player.x < self.camera.x1 and self.camera.y <= self.player.y < self.camera.y1:
+            print("detecté")
+            self.camera.image.fill(RED)
+        pass
 
 
 game = Game()
