@@ -2,6 +2,7 @@ import pygame as pygame
 import sys
 from settings import *
 from sprites import *
+import os 
 
 class Game:
     def __init__(self):
@@ -11,6 +12,7 @@ class Game:
         self.clock = pygame.time.Clock()
         pygame.key.set_repeat(500, 100)
         self.load_data()
+        self.keyFound = False
 
     def load_data(self):
         pass
@@ -20,6 +22,8 @@ class Game:
         self.allSprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.player = Player(self, 10, 10)
+        self.door = Door(self, 30, 20)
+        self.key = Key(self,20,10)
 
     def run(self):
         self.playing = True
@@ -29,7 +33,7 @@ class Game:
             self.mouvement()
             self.update()
             self.draw()
-
+            self.keySystem()
     def quit(self):
         pygame.quit()
         sys.exit()
@@ -64,6 +68,16 @@ class Game:
                     self.player.move(directionY=-1)
                 if event.key == pygame.K_DOWN:
                     self.player.move(directionY=1)
+
+    def keySystem(self):
+        if self.player.rect.colliderect(self.key.rect):
+            self.keyFound = True
+            print("True")
+
+        if self.keyFound == True:
+            pass
+
+
 
 game = Game()
 while True:

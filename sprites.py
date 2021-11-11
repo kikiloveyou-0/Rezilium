@@ -1,6 +1,7 @@
 import pygame as pygame
 from settings import *
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.allSprites
@@ -15,6 +16,33 @@ class Player(pygame.sprite.Sprite):
         self.x += directionX
         self.y += directionY
 
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+class Door(pygame.sprite.Sprite):
+    def __init__(self,game, x, y):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image = pygame.image.load('sprites/porte/porte_down.png')
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+class Key(pygame.sprite.Sprite):
+    def __init__(self,game, x, y):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image = pygame.Surface((TILESIZE, TILESIZE))
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+    
     def update(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
