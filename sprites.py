@@ -1,90 +1,95 @@
 import pygame as pygame
+import sys
 from settings import *
+from sprites import *
+import os
 
+class Game:
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption(TITLE)
+        self.clock = pygame.time.Clock()
+        pygame.key.set_repeat(500, 100)
+        self.load_data()
+        self.keyFound = False
 
-class Player(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
-        self.groups = game.allSprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.Surface((TILESIZE, TILESIZE))
-        self.image.fill(YELLOW)
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
+    def load_data(self):
+        pass
 
-    def move(self, directionX=0, directionY=0):
-        self.x += directionX
-        self.y += directionY
+    def new(self):
+        #Initialise toutes les variables et commence une nouvelle instance du jeu
+        self.allSprites = pygame.sprite.Group()
+        self.walls = pygame.sprite.Group()
+        self.player = Player(self, 10, 10)
+        self.door = Door(self, 30, 20)
+        self.key = Key(self,20,10)
+        self.camera = Camera(self, 20, 20, "up")
+        self.view = View(self, 18, 18)
 
-    def update(self):
-        self.rect.x = self.x * TILESIZE
-        self.rect.y = self.y * TILESIZE
+    def run(self):
+        self.playing = True
+        #On raffraichit tant que le programme tourne
+        while self.playing:
+            self.dt = self.clock.tick(FPS) / 1000
+            self.mouvement()
+            self.update()
+            self.draw()
+            self.keySystem()
+            self.detection()
 
-class Door(pygame.sprite.Sprite):
-    def __init__(self,game, x, y):
-        self.groups = game.allSprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/porte/porte_down.png')
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-
-    def update(self):
-        self.rect.x = self.x * TILESIZE
-        self.rect.y = self.y * TILESIZE
-
-class Key(pygame.sprite.Sprite):
-    def __init__(self,game, x, y):
-        self.groups = game.allSprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.Surface((TILESIZE, TILESIZE))
-        self.image.fill(GREEN)
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-    
-    def update(self):
-        self.rect.x = self.x * TILESIZE
-        self.rect.y = self.y * TILESIZE
-        
-class Camera(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, facing):
-        # le sprite de la caméra ne s'affiche pas car je n'arrive pas à créer et faire co-exister plusieurs sprites
-        self.groups = game.allSprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        self.facing = facing
-        if self.facing == "up":
-            IMAGE = pygame.image.load('sprites\camera\camera_non_detecté\camera_up.png').convert_alpha()
-        self.image = IMAGE
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-
-    def View(self, game, x, y):
-        self.groups = game.allSprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
-
-        #pygame.sprite.Sprite.add(self, self.groups) probablement la bonne méthode pour créer plusieurs sprites mais ne marche pas
-
-        '''self.imageview = pygame.Surface((TILESIZE*5, TILESIZE*2))
-        self.imageview.fill(GREEN)
-        self.rectview = self.imageview.get_rect()
-        self.xview = x
-        self.yview = y''' # j'ai aussi testé ça mais ça ne marche pas
-
-        # pour faire un cône, on peux juste faire deux rectangles, mais je n'arrive pas à créer plusieurs sprites
-
-        self.image = pygame.Surface((TILESIZE*5, TILESIZE*2))
-        self.image.fill(GREEN)
-        self.image.set_alpha(125)
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-        self.x1 = self.x + 5
-        self.y1 = self.y + 2
+    def quit(self):
+        pygame.quit()
+        sys.exit()
 
     def update(self):
-        self.rect.x = self.x * TILESIZE
-        self.rect.y = self.y * TILESIZE
-        ''' self.rect.x = self.xview * TILESIZE
-        self.rect.y = self.yview * TILESIZE'''
+        self.allSprites.update()
+
+    def draw_grid(self):
+        for x in range(0, WIDTH, TILESIZE):
+            pygame.draw.line(self.screen, BLACK, (x, 0), (x, HEIGHT))
+        for y in range(0, HEIGHT, TILESIZE):
+            pygame.draw.line(self.screen, BLACK, (0, y), (WIDTH, y))
+
+    def draw(self):
+        self.screen.fill(BACKGROUNDCOLOR)
+        self.draw_grid()
+        self.allSprites.draw(self.screen)
+        pygame.display.flip()
+
+    def mouvement(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.quit()
+                if event.key == pygame.K_LEFT:
+                    self.player.move(directionX=-1)
+                if event.key == pygame.K_RIGHT:
+                    self.player.move(directionX=1)
+                if event.key == pygame.K_UP:
+                    self.player.move(directionY=-1)
+                if event.key == pygame.K_DOWN:
+                    self.player.move(directionY=1)
+
+    def keySystem(self):
+        if self.player.rect.colliderect(self.key.rect):
+            self.keyFound = True
+            print("True")
+
+        if self.keyFound == True:
+            pass
+
+    def detection(self):
+        if self.view.x <= self.player.x < self.view.x1 and self.view.y <= self.player.y < self.view.y1:
+            print("detecté")
+            self.view.image.fill(RED)
+            self.camera.image = pygame.image.load('sprites\camera\camera_detecté\camera_up.png').convert_alpha()
+        pass
+
+
+game = Game()
+while True:
+    game.new()
+    game.run()
