@@ -2,7 +2,7 @@ import pygame as pygame
 import sys
 from settings import *
 from sprites import *
-import os 
+import os
 
 class Game:
     def __init__(self):
@@ -25,7 +25,7 @@ class Game:
         self.door = Door(self, 30, 20)
         self.key = Key(self,20,10)
         self.camera = Camera(self, 20, 20, "up")
-        self.view = self.camera.View(self, 15, 15)
+        self.view = View(self, 18, 18)
 
     def run(self):
         self.playing = True
@@ -37,11 +37,11 @@ class Game:
             self.draw()
             self.keySystem()
             self.detection()
-            
+
     def quit(self):
         pygame.quit()
         sys.exit()
-    
+
     def update(self):
         self.allSprites.update()
 
@@ -82,9 +82,10 @@ class Game:
             pass
 
     def detection(self):
-        if self.camera.x <= self.player.x < self.camera.x1 and self.camera.y <= self.player.y < self.camera.y1:
+        if self.view.x <= self.player.x < self.view.x1 and self.view.y <= self.player.y < self.view.y1:
             print("detecté")
-            self.camera.image.fill(RED)
+            self.view.image.fill(RED)
+            self.camera.image = pygame.image.load('sprites\camera\camera_detecté\camera_up.png').convert_alpha()
         pass
 
 
