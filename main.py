@@ -47,9 +47,9 @@ class Game:
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
-            pygame.draw.line(self.screen, BLACK, (x, 0), (x, HEIGHT))
+            pygame.draw.line(self.screen, FLOORGREY, (x, 0), (x, HEIGHT))
         for y in range(0, HEIGHT, TILESIZE):
-            pygame.draw.line(self.screen, BLACK, (0, y), (WIDTH, y))
+            pygame.draw.line(self.screen, FLOORGREY, (0, y), (WIDTH, y))
 
     def draw(self):
         self.screen.fill(BACKGROUNDCOLOR)
@@ -86,7 +86,6 @@ class Game:
             print("detecté")
             self.camera.image.fill(RED)
         pass
-
 
 game = Game()
 while True:

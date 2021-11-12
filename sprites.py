@@ -54,7 +54,7 @@ class Camera(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.facing = facing
         if self.facing == "up":
-            IMAGE = pygame.image.load('sprites\camera\camera_non_detecté\camera_up.png').convert_alpha()
+            IMAGE = pygame.image.load('sprites/camera/camera_detecté/camera_up.png').convert_alpha()
         self.image = IMAGE
         self.rect = self.image.get_rect()
         self.x = x
