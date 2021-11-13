@@ -2,7 +2,7 @@ import pygame as pygame
 import sys
 from settings import *
 from sprites import *
-import os
+from os import path
 
 class Game:
     def __init__(self):
@@ -11,21 +11,43 @@ class Game:
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
         pygame.key.set_repeat(500, 100)
-        self.load_data()
+        self.loadData()
         self.keyFound = False
 
-    def load_data(self):
-        pass
-
+    def loadData(self):
+        gameFolder = path.dirname(__file__)
+        self.mapData = []
+        with open(path.join(gameFolder,'level1.txt'), 'rt') as f:
+            for line in f:
+                self.mapData.append(line)
+ 
     def new(self):
         #Initialise toutes les variables et commence une nouvelle instance du jeu
         self.allSprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
-        self.player = Player(self, 10, 10)
-        self.door = Door(self, 30, 20)
-        self.key = Key(self,20,10)
-        self.camera = Camera(self, 20, 20, "up")
-        self.view = View(self, 18, 18)
+        self.keyGroup = pygame.sprite.Group()
+        #enumerate = return la valeur de la liste ET son index.
+        for row, tiles in enumerate(self.mapData):
+            for colone, tile in enumerate(tiles):
+                if tile == 'w':
+                    self.wall = Wall(self,colone, row)
+                    
+                if tile == 'c':
+                    self.camera = Camera(self, colone, row, "up")
+
+                if tile == 'k':
+                    self.key = Key(self,colone,row)
+
+                if tile == 'v':
+                    self.view = View(self, colone, row)
+
+                if tile == 'd':
+                    self.door = Door(self, colone, row)
+
+                if tile == 'p':
+                    self.player = Player(self, colone, row)
+
+
 
     def run(self):
         self.playing = True
@@ -37,6 +59,7 @@ class Game:
             self.draw()
             self.keySystem()
             self.detection()
+        
 
     def quit(self):
         pygame.quit()
@@ -79,13 +102,13 @@ class Game:
             print("True")
 
         if self.keyFound == True:
-            pass
+            pygame.sprite.spritecollide(self.player, self.keyGroup, True)
 
     def detection(self):
         if self.view.x <= self.player.x < self.view.x1 and self.view.y <= self.player.y < self.view.y1:
             print("detecté")
             self.view.image.fill(RED)
-            self.camera.image = pygame.image.load('sprites\camera\camera_detecté\camera_up.png').convert_alpha()
+            self.camera.image = pygame.image.load('sprites/camera/camera_detecté/camera_right.png').convert_alpha()
         pass
 
 game = Game()

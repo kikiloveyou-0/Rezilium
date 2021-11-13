@@ -4,6 +4,7 @@ from settings import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
+        self.game = game
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image = pygame.Surface((TILESIZE, TILESIZE))
@@ -13,15 +14,24 @@ class Player(pygame.sprite.Sprite):
         self.y = y
 
     def move(self, directionX=0, directionY=0):
-        self.x += directionX
-        self.y += directionY
+        if not self.collide(directionX, directionY):
+            self.x += directionX
+            self.y += directionY
 
     def update(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
+    
+    def collide(self, directionX=0, directionY=0):
+        for wall in self.game.walls:
+            if wall.x == self.x + directionX and wall.y == self.y + directionY:
+                return True
+        return False
+
 
 class Door(pygame.sprite.Sprite):
     def __init__(self,game, x, y):
+        self.game = game
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image = pygame.image.load('sprites/porte/porte_down.png')
@@ -35,7 +45,8 @@ class Door(pygame.sprite.Sprite):
 
 class Key(pygame.sprite.Sprite):
     def __init__(self,game, x, y):
-        self.groups = game.allSprites
+        self.groups = game.allSprites, game.keyGroup
+        self.game = game
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image = pygame.Surface((TILESIZE, TILESIZE))
         self.image.fill(GREEN)
@@ -51,6 +62,7 @@ class Camera(pygame.sprite.Sprite):
     def __init__(self, game, x, y, facing):
         # le sprite de la caméra ne s'affiche pas car je n'arrive pas à créer et faire co-exister plusieurs sprites
         self.groups = game.allSprites
+        self.game = game
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.facing = facing
         if self.facing == "up":
@@ -66,6 +78,7 @@ class Camera(pygame.sprite.Sprite):
 
 class View(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
+        self.game = game
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image = pygame.Surface((TILESIZE*5, TILESIZE*2))
@@ -80,4 +93,18 @@ class View(pygame.sprite.Sprite):
     def update(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
+
+class Wall(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self.groups = game.allSprites, game.walls
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pygame.Surface((TILESIZE, TILESIZE))
+        self.image.fill(RED)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
 
