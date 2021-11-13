@@ -136,4 +136,74 @@ class Wall(pygame.sprite.Sprite):
                 self.image = pygame.image.load('sprites/murs/mur_down.png')
         else:
             self.image.fill((165,165,165))
+       class Titre(pygame.sprite.Sprite):
+    def __init__(self, game, x, y,):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image = pygame.image.load('sprites\menue\zgegos.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+class Fleches(pygame.sprite.Sprite):
+    def __init__(self, game, x, y,):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image = pygame.image.load('sprites\menue\zgegis.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+class E(pygame.sprite.Sprite):
+    def __init__(self, game, x, y,):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image = pygame.image.load('sprites\menue\zgegas.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+class Noms(pygame.sprite.Sprite):
+    def __init__(self, game, x, y,):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image = pygame.image.load('sprites\menue\zgegons.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+class PressEnter(pygame.sprite.Sprite):
+    def __init__(self, game, x, y,):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image = pygame.image.load('sprites\menue\zgegus.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+
+
+
+
+
 
