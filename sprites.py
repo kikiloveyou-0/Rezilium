@@ -99,10 +99,40 @@ class Wall(pygame.sprite.Sprite):
         self.groups = game.allSprites, game.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pygame.image.load('Tiles/images/wall.png')
+        self.image = pygame.Surface((TILESIZE, TILESIZE))
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+        if self.x == 0:
+            if self.y == 0:
+                self.image = pygame.image.load('Tiles/images/Tilemap_04.png')
+            elif self.y > ((HEIGHT / TILESIZE)-2):
+                self.image = pygame.image.load('Tiles/images/Tilemap_05.png')
+            else:
+                self.image = pygame.image.load('Tiles/images/Tilemap_08.png')
+        elif self.y == 0:
+            if self.x == 0:
+                self.image = pygame.image.load('Tiles/images/Tilemap_04.png')
+            elif self.x > ((WIDTH / TILESIZE)-2):
+                self.image = pygame.image.load('Tiles/images/Tilemap_03.png')
+            else:
+                self.image = pygame.image.load('Tiles/images/wall.png')
+        elif self.x > ((WIDTH / TILESIZE)-2):
+            if self.y == 0:
+                self.image = pygame.image.load('Tiles/images/Tilemap_04.png')
+            elif self.y > ((HEIGHT / TILESIZE)-2):
+                self.image = pygame.image.load('Tiles/images/Tilemap_07.png')
+            else:
+                self.image = pygame.image.load('Tiles/images/Tilemap_10.png')
+        elif self.y > ((HEIGHT / TILESIZE)-2):
+            if self.x == 0:
+                self.image = pygame.image.load('Tiles/images/Tilemap_05.png')
+            elif self.x > ((WIDTH / TILESIZE)-2):
+                self.image = pygame.image.load('Tiles/images/Tilemap_07.png')
+            else:
+                self.image = pygame.image.load('Tiles/images/Tilemap_09.png')
+        else:
+            self.image.fill((195,197,183))
 
