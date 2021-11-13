@@ -203,7 +203,21 @@ class PressEnter(pygame.sprite.Sprite):
         self.rect.y = self.y * TILESIZE
 
 
+    class Bouton(pygame.sprite.Sprite):
+    def __init__(self, game, x, y, facing):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.facing = facing
+        if self.facing == "up":
+            IMG = pygame.image.load('sprites\outon\outon.png').convert_alpha()
+        self.image = IMG
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
 
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
 
 
 
