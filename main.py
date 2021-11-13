@@ -111,6 +111,16 @@ class Game:
             self.view.image.fill(RED)
             self.camera.image = pygame.image.load('Tiles/images/Tilemap_15.png').convert_alpha()
         pass
+    
+    def bouton_appuye(self):
+        if self.bouton1.x == self.player and self.bouton1.y == self.player.y:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
+                        print("appuye")
+                        self.bouton1.image = pygame.image.load('sprites\outon\outon_bas.png').convert_alpha()
+    pass
+
 
 game = Game()
 while True:
