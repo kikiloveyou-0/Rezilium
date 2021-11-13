@@ -136,7 +136,7 @@ class Wall(pygame.sprite.Sprite):
                 self.image = pygame.image.load('sprites/murs/mur_down.png')
         else:
             self.image.fill((165,165,165))
-       class Titre(pygame.sprite.Sprite):
+ class Titre(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
