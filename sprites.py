@@ -7,8 +7,8 @@ class Player(pygame.sprite.Sprite):
         self.game = game
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.Surface((TILESIZE, TILESIZE))
-        self.image.fill(YELLOW)
+
+        self.image = pygame.image.load('Tiles/images/Player.png')
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -48,8 +48,7 @@ class Key(pygame.sprite.Sprite):
         self.groups = game.allSprites, game.keyGroup
         self.game = game
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.Surface((TILESIZE, TILESIZE))
-        self.image.fill(GREEN)
+        self.image = pygame.image.load('Tiles/images/Key.png')
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -66,7 +65,7 @@ class Camera(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.facing = facing
         if self.facing == "up":
-            IMAGE = pygame.image.load('sprites/camera/camera_detecté/camera_up.png').convert_alpha()
+            IMAGE = pygame.image.load('Tiles/images/Tilemap_15.png').convert_alpha()
         self.image = IMAGE
         self.rect = self.image.get_rect()
         self.x = x
@@ -100,8 +99,7 @@ class Wall(pygame.sprite.Sprite):
         self.groups = game.allSprites, game.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pygame.Surface((TILESIZE, TILESIZE))
-        self.image.fill(RED)
+        self.image = pygame.image.load('Tiles/images/wall.png')
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y

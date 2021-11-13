@@ -14,6 +14,7 @@ class Game:
         self.loadData()
         self.keyFound = False
 
+
     def loadData(self):
         gameFolder = path.dirname(__file__)
         self.mapData = []
@@ -108,7 +109,7 @@ class Game:
         if self.view.x <= self.player.x < self.view.x1 and self.view.y <= self.player.y < self.view.y1:
             print("detecté")
             self.view.image.fill(RED)
-            self.camera.image = pygame.image.load('sprites/camera/camera_detecté/camera_right.png').convert_alpha()
+            self.camera.image = pygame.image.load('Tiles/images/Tilemap_15.png').convert_alpha()
         pass
 
 game = Game()
