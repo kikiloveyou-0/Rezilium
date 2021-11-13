@@ -48,8 +48,7 @@ class Key(pygame.sprite.Sprite):
         self.groups = game.allSprites, game.keyGroup
         self.game = game
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.Surface((TILESIZE, TILESIZE))
-        self.image.fill(GREEN)
+        self.image = pygame.image.load('sprites/cle.png')
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -107,4 +106,34 @@ class Wall(pygame.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+        if self.x == 0:
+            if self.y == 0:
+                self.image = pygame.image.load('sprites/murs/mur_upleft.png')
+            elif self.y > ((HEIGHT / TILESIZE)-2):
+                self.image = pygame.image.load('sprites/murs/mur_downleft.png')
+            else:
+                self.image = pygame.image.load('sprites/murs/mur_left.png')
+        elif self.y == 0:
+            if self.x == 0:
+                self.image = pygame.image.load('sprites/murs/mur_upleft.png')
+            elif self.x > ((WIDTH / TILESIZE)-2):
+                self.image = pygame.image.load('sprites/murs/mur_upright.png')
+            else:
+                self.image = pygame.image.load('sprites/murs/mur_up.png')
+        elif self.x > ((WIDTH / TILESIZE)-2):
+            if self.y == 0:
+                self.image = pygame.image.load('sprites/murs/mur_upleft.png')
+            elif self.y > ((HEIGHT / TILESIZE)-2):
+                self.image = pygame.image.load('sprites/murs/mur_downright.png')
+            else:
+                self.image = pygame.image.load('sprites/murs/mur_right.png')
+        elif self.y > ((HEIGHT / TILESIZE)-2):
+            if self.x == 0:
+                self.image = pygame.image.load('sprites/murs/mur_downleft.png')
+            elif self.x > ((WIDTH / TILESIZE)-2):
+                self.image = pygame.image.load('sprites/murs/mur_downright.png')
+            else:
+                self.image = pygame.image.load('sprites/murs/mur_down.png')
+        else:
+            self.image.fill((165,165,165))
 
