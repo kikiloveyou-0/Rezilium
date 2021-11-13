@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
-    
+
     def collide(self, directionX=0, directionY=0):
         for wall in self.game.walls:
             if wall.x == self.x + directionX and wall.y == self.y + directionY:
@@ -136,7 +136,8 @@ class Wall(pygame.sprite.Sprite):
                 self.image = pygame.image.load('sprites/murs/mur_down.png')
         else:
             self.image.fill((165,165,165))
- class Titre(pygame.sprite.Sprite):
+
+class Titre(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
