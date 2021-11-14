@@ -269,7 +269,7 @@ class Box(pygame.sprite.Sprite):
         return False
     
     
-    class Bouton(pygame.sprite.Sprite):
+class Bouton(pygame.sprite.Sprite):
     def __init__(self, game, x, y, facing):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
