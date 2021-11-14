@@ -61,6 +61,9 @@ class Game:
 
                 if tile == 'b':
                     self.box = Box(self,colone, row)
+                    
+                 if tile == 'u':
+                    self.bouton = Bouton(self,colone, row, "up")                   
 
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
@@ -77,6 +80,7 @@ class Game:
         self.keyGroup = pygame.sprite.Group()
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
+        self.bouton = pygame.sprite.Group()        
         #enumerate = return la valeur de la liste ET son index.
         for row, tiles in enumerate(self.mapData):
             for colone, tile in enumerate(tiles):
@@ -109,6 +113,10 @@ class Game:
                 
                 if tile == 'b':
                     self.box = Box(self,colone, row)
+                    
+                if tile == 'u':
+                    self.bouton = Bouton(self,colone, row, "up")
+                    
 
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
@@ -204,6 +212,10 @@ class Game:
                     self.player.move(directionY=1)
                     if self.player.push():
                         self.box.move(directionY=1)
+                        
+                 if event.key == pygame.K_e:
+                    if self.bouton.x == self.player.x and self.bouton.y == self.player.y:
+                        print("appuye")
 
     def keySystem(self):
         if self.player.rect.colliderect(self.key.rect):
@@ -260,15 +272,7 @@ class Game:
             while True:
                 game.respawnnew()
                 game.run()
-                
-    def bouton_appuye(self):
-        if self.bouton1.x == self.player and self.bouton1.y == self.player.y:
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_e:
-                        print("appuye")
-                        self.bouton1.image = pygame.image.load('sprites\outon\outon_bas.png').convert_alpha()
-    pass
+         
 
 game = Game()
 while True:
