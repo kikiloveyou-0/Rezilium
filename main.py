@@ -25,6 +25,7 @@ class Game:
         #Initialise toutes les variables et commence une nouvelle instance du jeu mais uniquement pour le menu
         self.allSprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
+        self.boxes = pygame.sprite.Group()
         self.keyGroup = pygame.sprite.Group()
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
@@ -57,6 +58,9 @@ class Game:
 
                 if tile == 'p':
                     self.player = Player(self, colone, row)
+
+                if tile == 'b':
+                    self.box = Box(self,colone, row)
 
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
@@ -69,6 +73,7 @@ class Game:
         #Initialise toutes les variables et commence une nouvelle instance du jeu mais uniquement pour les respawns
         self.allSprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
+        self.boxes = pygame.sprite.Group()
         self.keyGroup = pygame.sprite.Group()
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
@@ -101,6 +106,9 @@ class Game:
 
                 if tile == 'p':
                     self.player = Player(self, colone, row)
+                
+                if tile == 'b':
+                    self.box = Box(self,colone, row)
 
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
@@ -182,12 +190,20 @@ class Game:
                     self.quit()
                 if event.key == pygame.K_LEFT:
                     self.player.move(directionX=-1)
+                    if self.player.push():
+                        self.box.move(directionX=-1)
                 if event.key == pygame.K_RIGHT:
                     self.player.move(directionX=1)
+                    if self.player.push():
+                        self.box.move(directionX=1)
                 if event.key == pygame.K_UP:
                     self.player.move(directionY=-1)
+                    if self.player.push():
+                        self.box.move(directionY=-1)
                 if event.key == pygame.K_DOWN:
                     self.player.move(directionY=1)
+                    if self.player.push():
+                        self.box.move(directionY=1)
 
     def keySystem(self):
         if self.player.rect.colliderect(self.key.rect):
