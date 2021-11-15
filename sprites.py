@@ -43,11 +43,21 @@ class Player(pygame.sprite.Sprite):
 
 
 class Door(pygame.sprite.Sprite):
-    def __init__(self,game, x, y):
+    def __init__(self,game, x, y, facing):
         self.game = game
-        self.groups = game.allSprites
+        self.groups = game.allSprites, game.doors
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/porte/porte_down.png')
+        self.facing = facing
+        if self.facing == "up":
+            IMAGE = pygame.image.load('sprites/porte/porte_up.png').convert_alpha()
+        elif self.facing == "down":
+            IMAGE = pygame.image.load('sprites/porte/porte_down.png').convert_alpha()
+        elif self.facing == "right":
+            IMAGE = pygame.image.load('sprites/porte/porte_right.png').convert_alpha()
+        elif self.facing == "left":
+            IMAGE = pygame.image.load('sprites/porte/porte_left.png').convert_alpha()
+
+        self.image = IMAGE
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y

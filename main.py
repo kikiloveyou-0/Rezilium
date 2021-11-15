@@ -18,15 +18,12 @@ class Game:
         self.doorOpen = False
 
     def loadData(self):
-        self.currentLevel = 0
         gameFolder = path.dirname(__file__)
         self.mapData = []
         # les niveaux sont codés dans des fichiers txt, on apporte le fichier txt du niveau 1
         with open(path.join(gameFolder,'level1.txt'), 'rt') as f:
             for line in f:
                 self.mapData.append(line)
-
-
 
     def new(self):
         #Initialise toutes les variables et commence une nouvelle instance du jeu mais uniquement pour le menu
@@ -37,7 +34,6 @@ class Game:
         self.keyGroup = pygame.sprite.Group()
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
-        self.door = pygame.sprite.Group()
         #enumerate = return la valeur de la liste ET son index.
         # on passe sur le fichier txt et selon le caractère, on créer des sprites
         for row, tiles in enumerate(self.mapData):
@@ -63,8 +59,14 @@ class Game:
                 if tile == 'v':
                     self.view = View(self, colone, row)
 
+                if tile == 'z':
+                    self.door = Door(self, colone, row, "up")
+                if tile == 's':
+                    self.door = Door(self, colone, row, "down")
                 if tile == 'd':
-                    self.door = Door(self, colone, row)
+                    self.door = Door(self, colone, row, "right")
+                if tile == 'q':
+                    self.door = Door(self, colone, row, "left")
 
                 if tile == 'p':
                     self.player = Player(self, colone, row)
@@ -85,7 +87,7 @@ class Game:
         self.alive = True
         self.gamestart = False
         self.menu()
-        
+
     def respawnnew(self):
         #Initialise toutes les variables et commence une nouvelle instance du jeu mais uniquement pour les respawns
         # on créer les groupes de sprites
@@ -95,10 +97,6 @@ class Game:
         self.keyGroup = pygame.sprite.Group()
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
-<<<<<<< HEAD
-=======
-        self.door = pygame.sprite.Group()
->>>>>>> 4e0cdf5433140088a8c838b8eaec344aab2010bb
         self.bouton = pygame.sprite.Group()
         #enumerate = return la valeur de la liste ET son index.
         # on passe sur le fichier txt et selon le caractère, on créer des sprites
@@ -125,8 +123,14 @@ class Game:
                 if tile == 'v':
                     self.view = View(self, colone, row)
 
+                if tile == 'z':
+                    self.door = Door(self, colone, row, "up")
+                if tile == 's':
+                    self.door = Door(self, colone, row, "down")
                 if tile == 'd':
-                    self.door = Door(self, colone, row)
+                    self.door = Door(self, colone, row, "right")
+                if tile == 'q':
+                    self.door = Door(self, colone, row, "left")
 
                 if tile == 'p':
                     self.player = Player(self, colone, row)
@@ -139,7 +143,6 @@ class Game:
 
                 if tile == 'u':
                     self.bouton = Bouton(self,colone, row, "up")
-
         # on créer les champs de vision des caméras
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
@@ -266,7 +269,6 @@ class Game:
 
         if self.keyFound == True:
             pygame.sprite.spritecollide(self.player, self.keyGroup, True)
-            self.currentLevel = 1
 
         if self.follower.rect.colliderect(self.key.rect):
             self.keyFound = True
@@ -276,12 +278,8 @@ class Game:
             pygame.sprite.spritecollide(self.follower, self.keyGroup, True)
 
     def doorSystem(self):
-            if self.player.rect.colliderect(self.door.rect):
-                self.doorOpen = True
-                print("True")
+        pass
 
-            if self.doorOpen == True:
-                door.facing = "down"
 
 
 
@@ -298,13 +296,11 @@ class Game:
     def plaqueDetection(self):
         # méthode codant les plaques de pression et la détection de celles-ci
         if self.plaque.x == self.player.x and self.plaque.y == self.player.y:
-            print("plaque pressé")
             self.activationCamera = False
             self.plaque.image = pygame.image.load('sprites\plaques\plaque_pressé.png').convert_alpha()
         if not self.plaque.x == self.player.x or not self.plaque.y == self.player.y:
             self.plaque.image = pygame.image.load('sprites\plaques\plaque_non_pressé.png').convert_alpha()
             self.activationCamera = True
-            print("plaque non-pressé")
 
 
     def desactivateCameras(self):
@@ -325,8 +321,6 @@ class Game:
             self.view2.image.fill(GREEN)
             self.view2.image.set_alpha(125)
 
-<<<<<<< HEAD
-=======
         if self.activationCamera == True:
             if self.camera.facing == "up":
                 IMAGE = pygame.image.load('sprites/camera/camera_detecté/camera_up.png').convert_alpha()
@@ -344,7 +338,6 @@ class Game:
             self.view2.image.set_alpha(125)
 
 
->>>>>>> 4e0cdf5433140088a8c838b8eaec344aab2010bb
     def death(self):
         # méthode faisant mourrir le joueur au besoin
         if self.alive == False:
