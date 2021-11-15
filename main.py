@@ -5,6 +5,9 @@ from sprites import *
 from file import *
 from os import path
 
+level = 'level1.txt'
+
+
 class Game:
     def __init__(self):
         # on initialise python
@@ -22,7 +25,8 @@ class Game:
         self.mapData = []
         self
         # les niveaux sont codés dans des fichiers txt, on apporte le fichier txt du niveau 1
-        with open(path.join(gameFolder,'level1.txt'), 'rt') as f:
+        print(level)
+        with open(path.join(gameFolder, level), 'rt') as f:
             for line in f:
                 self.mapData.append(line)
 
@@ -82,6 +86,11 @@ class Game:
                 if tile == 'u':
                     self.bouton = Bouton(self,colone, row, "up")
 
+                if tile == '$':
+                    self.view1 = View(self, colone, row)
+                if tile == '£':
+                    self.view2 = View(self, colone, row)
+
                 if tile == '[':
                     self.wall = Wall(self,colone, row, "left")
                 if tile == ']':
@@ -101,9 +110,9 @@ class Game:
                 if tile == '>':
                     self.wall = Wall(self,colone, row, "inter2")
 
+
         # on créer les champs de vision des caméras
-        self.view1 = View(self, 9, 15)
-        self.view2 = View(self, 15, 16)
+
         # on rend le joueur vivant, mais le jeu ne commence pas, on initialise le menu
         self.alive = True
         self.gamestart = False
@@ -166,6 +175,11 @@ class Game:
                 if tile == 'u':
                     self.bouton = Bouton(self,colone, row, "up")
 
+                if tile == '$':
+                    self.view1 = View(self, colone, row)
+                if tile == '£':
+                    self.view2 = View(self, colone, row)
+
                 if tile == '[':
                     self.wall = Wall(self,colone, row, "left")
                 if tile == ']':
@@ -185,8 +199,6 @@ class Game:
                 if tile == '>':
                     self.wall = Wall(self,colone, row, "inter2")
         # on créer les champs de vision des caméras
-        self.view1 = View(self, 9, 15)
-        self.view2 = View(self, 15, 16)
         # on rend le joueur vivant, le jeu commence, on initialise pas le menu
         self.activationCamera = True
         self.alive = True
@@ -240,8 +252,10 @@ class Game:
                     self.detection()
 
                 self.death()
+                self.winPlayer()
                 self.plaqueDetection()
                 self.desactivateCameras()
+
 
 
     def quit(self):
@@ -417,7 +431,16 @@ class Game:
 
     def winPlayer(self):
         if self.door.x == self.player.x and self.door.y == self.player.y:
-            pass
+            print("win !")
+            global level
+            level = 'level2.txt'
+            print(level)
+            game2 = Game()
+            while True:
+                game2.respawnnew()
+                game2.run()
+
+
 
 
 
