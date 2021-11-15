@@ -62,7 +62,7 @@ class Game:
                 if tile == 'b':
                     self.box = Box(self,colone, row)
                     
-                 if tile == 'u':
+                if tile == 'u':
                     self.bouton = Bouton(self,colone, row, "up")                   
 
         self.view1 = View(self, 9, 15)
@@ -213,7 +213,7 @@ class Game:
                     if self.player.push():
                         self.box.move(directionY=1)
                         
-                 if event.key == pygame.K_e:
+                if event.key == pygame.K_e:
                     if self.bouton.x == self.player.x and self.bouton.y == self.player.y:
                         print("appuye")
 
