@@ -20,6 +20,7 @@ class Game:
     def loadData(self):
         gameFolder = path.dirname(__file__)
         self.mapData = []
+        self
         # les niveaux sont codés dans des fichiers txt, on apporte le fichier txt du niveau 1
         with open(path.join(gameFolder,'level1.txt'), 'rt') as f:
             for line in f:
@@ -34,12 +35,13 @@ class Game:
         self.keyGroup = pygame.sprite.Group()
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
+        self.doors = pygame.sprite.Group()
         #enumerate = return la valeur de la liste ET son index.
         # on passe sur le fichier txt et selon le caractère, on créer des sprites
         for row, tiles in enumerate(self.mapData):
             for colone, tile in enumerate(tiles):
                 if tile == 'w':
-                    self.wall = Wall(self,colone, row)
+                    self.wall = Wall(self,colone, row, "w")
 
                 if tile == '8':
                     self.camera = Camera(self, colone, row, "up")
@@ -79,6 +81,25 @@ class Game:
 
                 if tile == 'u':
                     self.bouton = Bouton(self,colone, row, "up")
+
+                if tile == '[':
+                    self.wall = Wall(self,colone, row, "left")
+                if tile == ']':
+                    self.wall = Wall(self,colone, row, "right")
+                if tile == '/':
+                    self.wall = Wall(self,colone, row, "uleft")
+                if tile == '+':
+                    self.wall = Wall(self,colone, row, "uright")
+                if tile == '{':
+                    self.wall = Wall(self,colone, row, "dleft")
+                if tile == '}':
+                    self.wall = Wall(self,colone, row, "dright")
+                if tile == 'a':
+                    self.wall = Wall(self,colone, row, "alt")
+                if tile == '<':
+                    self.wall = Wall(self,colone, row, "inter1")
+                if tile == '>':
+                    self.wall = Wall(self,colone, row, "inter2")
 
         # on créer les champs de vision des caméras
         self.view1 = View(self, 9, 15)
@@ -98,12 +119,13 @@ class Game:
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
         self.bouton = pygame.sprite.Group()
+        self.doors = pygame.sprite.Group()
         #enumerate = return la valeur de la liste ET son index.
         # on passe sur le fichier txt et selon le caractère, on créer des sprites
         for row, tiles in enumerate(self.mapData):
             for colone, tile in enumerate(tiles):
                 if tile == 'w':
-                    self.wall = Wall(self,colone, row)
+                    self.wall = Wall(self,colone, row, "w")
 
                 if tile == '8':
                     self.camera = Camera(self, colone, row, "up")
@@ -143,6 +165,25 @@ class Game:
 
                 if tile == 'u':
                     self.bouton = Bouton(self,colone, row, "up")
+
+                if tile == '[':
+                    self.wall = Wall(self,colone, row, "left")
+                if tile == ']':
+                    self.wall = Wall(self,colone, row, "right")
+                if tile == '/':
+                    self.wall = Wall(self,colone, row, "uleft")
+                if tile == '+':
+                    self.wall = Wall(self,colone, row, "uright")
+                if tile == '{':
+                    self.wall = Wall(self,colone, row, "dleft")
+                if tile == '}':
+                    self.wall = Wall(self,colone, row, "dright")
+                if tile == 'a':
+                    self.wall = Wall(self,colone, row, "alt")
+                if tile == '<':
+                    self.wall = Wall(self,colone, row, "inter1")
+                if tile == '>':
+                    self.wall = Wall(self,colone, row, "inter2")
         # on créer les champs de vision des caméras
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
@@ -374,8 +415,12 @@ class Game:
                     self.box.move(directionY=1)
                 self.fileFollower.defiler()
 
+    def winPlayer(self):
+        if self.door.x == self.player.x and self.door.y == self.player.y:
+            pass
 
-        pass
+
+
 
 # on lance le jeu dans une variable game
 game = Game()
