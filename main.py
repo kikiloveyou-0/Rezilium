@@ -15,11 +15,14 @@ class Game:
         self.keyFound = False
 
     def loadData(self):
+        self.currentLevel = 0
         gameFolder = path.dirname(__file__)
         self.mapData = []
         with open(path.join(gameFolder,'level1.txt'), 'rt') as f:
             for line in f:
                 self.mapData.append(line)
+
+
 
     def new(self):
         #Initialise toutes les variables et commence une nouvelle instance du jeu mais uniquement pour le menu
@@ -89,7 +92,7 @@ class Game:
         self.alive = True
         self.gamestart = False
         self.menu()
-
+        
     def respawnnew(self):
         #Initialise toutes les variables et commence une nouvelle instance du jeu mais uniquement pour les respawns
         self.allSprites = pygame.sprite.Group()
@@ -98,7 +101,7 @@ class Game:
         self.keyGroup = pygame.sprite.Group()
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
-        self.bouton = pygame.sprite.Group()        
+        self.bouton = pygame.sprite.Group()
         #enumerate = return la valeur de la liste ET son index.
         for row, tiles in enumerate(self.mapData):
             for colone, tile in enumerate(tiles):
@@ -253,6 +256,7 @@ class Game:
 
         if self.keyFound == True:
             pygame.sprite.spritecollide(self.player, self.keyGroup, True)
+            self.currentLevel = 1
 
     def detection(self):
         if self.view1.x <= self.player.x < self.view1.x1 and self.view1.y <= self.player.y < self.view1.y1:
@@ -286,13 +290,6 @@ class Game:
 
             self.view2.image.fill(GREEN)
             self.view2.image.set_alpha(125)
-
-
-
-
-        pass
-
-
 
     def death(self):
         if self.alive == False:
