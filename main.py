@@ -95,10 +95,6 @@ class Game:
         self.keyGroup = pygame.sprite.Group()
         self.cameras = pygame.sprite.Group()
         self.views = pygame.sprite.Group()
-<<<<<<< HEAD
-=======
-        self.door = pygame.sprite.Group()
->>>>>>> 4e0cdf5433140088a8c838b8eaec344aab2010bb
         self.bouton = pygame.sprite.Group()
         #enumerate = return la valeur de la liste ET son index.
         # on passe sur le fichier txt et selon le caractère, on créer des sprites
@@ -300,9 +296,9 @@ class Game:
         if self.plaque.x == self.player.x and self.plaque.y == self.player.y:
             print("plaque pressé")
             self.activationCamera = False
-            self.plaque.image = pygame.image.load('sprites\plaques\plaque_pressé.png').convert_alpha()
+            self.plaque.image = pygame.image.load('sprites/plaques/plaque_pressé.png').convert_alpha()
         if not self.plaque.x == self.player.x or not self.plaque.y == self.player.y:
-            self.plaque.image = pygame.image.load('sprites\plaques\plaque_non_pressé.png').convert_alpha()
+            self.plaque.image = pygame.image.load('sprites/plaques/plaque_non_pressé.png').convert_alpha()
             self.activationCamera = True
             print("plaque non-pressé")
 
@@ -325,26 +321,6 @@ class Game:
             self.view2.image.fill(GREEN)
             self.view2.image.set_alpha(125)
 
-<<<<<<< HEAD
-=======
-        if self.activationCamera == True:
-            if self.camera.facing == "up":
-                IMAGE = pygame.image.load('sprites/camera/camera_detecté/camera_up.png').convert_alpha()
-            elif self.camera.facing == "down":
-                IMAGE = pygame.image.load('sprites/camera/camera_detecté/camera_down.png').convert_alpha()
-            elif self.camera.facing == "right":
-                IMAGE = pygame.image.load('sprites/camera/camera_detecté/camera_right.png').convert_alpha()
-            elif self.camera.facing == "left":
-                IMAGE = pygame.image.load('sprites/camera/camera_detecté/camera_left.png').convert_alpha()
-
-            self.view1.image.fill(RED)
-            self.view1.image.set_alpha(125)
-
-            self.view2.image.fill(RED)
-            self.view2.image.set_alpha(125)
-
-
->>>>>>> 4e0cdf5433140088a8c838b8eaec344aab2010bb
     def death(self):
         # méthode faisant mourrir le joueur au besoin
         if self.alive == False:

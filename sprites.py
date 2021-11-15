@@ -47,7 +47,7 @@ class Door(pygame.sprite.Sprite):
         self.game = game
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/porte/porte_down.png')
+        self.image = pygame.image.load('Tiles/images/Tilemap_20.png')
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -160,7 +160,7 @@ class Titre(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites\menue\zgegos.png').convert_alpha()
+        self.image = pygame.image.load('sprites/menue/zgegos.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -173,7 +173,7 @@ class Fleches(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites\menue\zgegis.png').convert_alpha()
+        self.image = pygame.image.load('sprites/menue/zgegis.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -186,7 +186,7 @@ class E(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites\menue\zgegas.png').convert_alpha()
+        self.image = pygame.image.load('sprites/menue/zgegas.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -199,7 +199,7 @@ class Noms(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites\menue\zgegons.png').convert_alpha()
+        self.image = pygame.image.load('sprites/menue/zgegons.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -212,7 +212,7 @@ class PressEnter(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites\menue\zgegus.png').convert_alpha()
+        self.image = pygame.image.load('sprites/menue/zgegus.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -226,7 +226,7 @@ class Plaque(pygame.sprite.Sprite):
         self.groups = game.allSprites
         self.game = game
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites\plaques\plaque_non_pressé.png').convert_alpha()
+        self.image = pygame.image.load('sprites/plaques/plaque_non_pressé.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -275,7 +275,7 @@ class Bouton(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.facing = facing
         if self.facing == "up":
-            IMG = pygame.image.load('sprites\outon\outon.png').convert_alpha()
+            IMG = pygame.image.load('sprites/outon/outon.png').convert_alpha()
         self.image = IMG
         self.rect = self.image.get_rect()
         self.x = x
