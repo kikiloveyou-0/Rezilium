@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.y = y
 
     def move(self, directionX=0, directionY=0):
-        if not self.collideWall(directionX, directionY) and not self.collideCamera(directionX, directionY):
+        if not self.collideWall(directionX, directionY) and not self.collideCamera(directionX, directionY) and not self.collideDoor(directionX, directionY):
             self.x += directionX
             self.y += directionY
 
@@ -33,6 +33,14 @@ class Player(pygame.sprite.Sprite):
                 return True
         return False
 
+    def collideDoor(self, directionX=0, directionY=0):
+        for door in self.game.doors:
+            if door.x == self.x + directionX and door.y == self.y + directionY:
+                return True
+        return False
+
+
+
     def push(self):
         for box in self.game.boxes:
             if box.x == self.x and box.y == self.y:
@@ -47,9 +55,6 @@ class Door(pygame.sprite.Sprite):
         self.game = game
         self.groups = game.allSprites, game.doors
         pygame.sprite.Sprite.__init__(self, self.groups)
-<<<<<<< HEAD
-        self.image = pygame.image.load('Tiles/images/Tilemap_20.png')
-=======
         self.facing = facing
         if self.facing == "up":
             IMAGE = pygame.image.load('sprites/porte/porte_up.png').convert_alpha()
@@ -61,7 +66,6 @@ class Door(pygame.sprite.Sprite):
             IMAGE = pygame.image.load('sprites/porte/porte_left.png').convert_alpha()
 
         self.image = IMAGE
->>>>>>> 81df2ec5409e5d0244835463a2eb61fbb2833a47
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -165,7 +169,7 @@ class Titre(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/menue/zgegos.png').convert_alpha()
+        self.image = pygame.image.load('sprites\menue\zgegos.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -178,7 +182,7 @@ class Fleches(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/menue/zgegis.png').convert_alpha()
+        self.image = pygame.image.load('sprites\menue\zgegis.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -191,7 +195,7 @@ class E(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/menue/zgegas.png').convert_alpha()
+        self.image = pygame.image.load('sprites\menue\zgegas.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -204,7 +208,7 @@ class Noms(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/menue/zgegons.png').convert_alpha()
+        self.image = pygame.image.load('sprites\menue\zgegons.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -217,7 +221,7 @@ class PressEnter(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
         self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/menue/zgegus.png').convert_alpha()
+        self.image = pygame.image.load('sprites\menue\zgegus.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -231,7 +235,7 @@ class Plaque(pygame.sprite.Sprite):
         self.groups = game.allSprites
         self.game = game
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/plaques/plaque_non_pressé.png').convert_alpha()
+        self.image = pygame.image.load('sprites\plaques\plaque_non_pressé.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -280,7 +284,7 @@ class Bouton(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.facing = facing
         if self.facing == "up":
-            IMG = pygame.image.load('sprites/outon/outon.png').convert_alpha()
+            IMG = pygame.image.load('sprites\outon\outon.png').convert_alpha()
         self.image = IMG
         self.rect = self.image.get_rect()
         self.x = x
@@ -301,7 +305,7 @@ class Follower(pygame.sprite.Sprite):
         self.y = y
 
     def move(self, directionX=0, directionY=0):
-        if not self.collideWall(directionX, directionY) and not self.collideCamera(directionX, directionY):
+        if not self.collideWall(directionX, directionY) and not self.collideCamera(directionX, directionY) and not self.collideDoor(directionX, directionY):
             self.x += directionX
             self.y += directionY
 
@@ -318,6 +322,12 @@ class Follower(pygame.sprite.Sprite):
     def collideCamera(self, directionX=0, directionY=0):
         for camera in self.game.cameras:
             if camera.x == self.x + directionX and camera.y == self.y + directionY:
+                return True
+        return False
+
+    def collideDoor(self, directionX=0, directionY=0):
+        for door in self.game.doors:
+            if door.x == self.x + directionX and door.y == self.y + directionY:
                 return True
         return False
 

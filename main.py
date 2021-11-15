@@ -6,6 +6,7 @@ from file import *
 from os import path
 
 level = 'level1.txt'
+levelCount = 1
 
 
 class Game:
@@ -90,6 +91,11 @@ class Game:
                     self.view1 = View(self, colone, row)
                 if tile == '£':
                     self.view2 = View(self, colone, row)
+                if tile == '¤':
+                    self.view3 = View(self, colone, row)
+                if tile == '!':
+                    self.view4 = View(self, colone, row)
+
 
                 if tile == '[':
                     self.wall = Wall(self,colone, row, "left")
@@ -179,6 +185,10 @@ class Game:
                     self.view1 = View(self, colone, row)
                 if tile == '£':
                     self.view2 = View(self, colone, row)
+                if tile == '¤':
+                    self.view3 = View(self, colone, row)
+                if tile == '!':
+                    self.view4 = View(self, colone, row)
 
                 if tile == '[':
                     self.wall = Wall(self,colone, row, "left")
@@ -290,6 +300,12 @@ class Game:
                 if event.key == pygame.K_ESCAPE:
                     self.quit()
 
+                if event.key == pygame.K_r:
+                    game = Game()
+                    while True:
+                        game.respawnnew()
+                        game.run()
+
                 if event.key == pygame.K_LEFT:
                     self.player.move(directionX=-1)
                     self.fileFollower.enfiler("left")
@@ -316,21 +332,22 @@ class Game:
                         print("appuye")
                         #bouton.appuye = True
 
+
     def keySystem(self):
         # méthode faisant disparaître la clé si elle est recuperé
         if self.player.rect.colliderect(self.key.rect):
             self.keyFound = True
             print("True")
-
         if self.keyFound == True:
             pygame.sprite.spritecollide(self.player, self.keyGroup, True)
+            pygame.sprite.Sprite.kill(self.door)
 
         if self.follower.rect.colliderect(self.key.rect):
             self.keyFound = True
             print("True")
-
         if self.keyFound == True:
             pygame.sprite.spritecollide(self.follower, self.keyGroup, True)
+            pygame.sprite.Sprite.kill(self.door)
 
     def doorSystem(self):
         pass
@@ -340,21 +357,39 @@ class Game:
 
     def detection(self):
         # méthode codant les champs de détection des caméras
-        if self.view1.x <= self.player.x < self.view1.x1 and self.view1.y <= self.player.y < self.view1.y1:
+
+        if self.player.rect.colliderect(self.view1.rect):
             print("detecté")
             self.alive = False
 
-        if self.view2.x <= self.player.x < self.view2.x1 and self.view2.y <= self.player.y < self.view2.y1:
+        if self.player.rect.colliderect(self.view2.rect):
+            print("detecté")
+            self.alive = False
+
+        if self.player.rect.colliderect(self.view3.rect):
+            print("detecté")
+            self.alive = False
+
+        if self.player.rect.colliderect(self.view4.rect):
             print("detecté")
             self.alive = False
 
     def plaqueDetection(self):
         # méthode codant les plaques de pression et la détection de celles-ci
         if self.plaque.x == self.player.x and self.plaque.y == self.player.y:
+            print("plaque pressé !")
             self.activationCamera = False
-            self.plaque.image = pygame.image.load('sprites/plaques/plaque_pressé.png').convert_alpha()
+            self.plaque.image = pygame.image.load('sprites\plaques\plaque_pressé.png').convert_alpha()
         if not self.plaque.x == self.player.x or not self.plaque.y == self.player.y:
-            self.plaque.image = pygame.image.load('sprites/plaques/plaque_non_pressé.png').convert_alpha()
+            self.plaque.image = pygame.image.load('sprites\plaques\plaque_non_pressé.png').convert_alpha()
+            self.activationCamera = True
+
+        if self.plaque.x == self.follower.x and self.plaque.y == self.follower.y:
+            print("plaque pressé !")
+            self.activationCamera = False
+            self.plaque.image = pygame.image.load('sprites\plaques\plaque_pressé.png').convert_alpha()
+        if not self.plaque.x == self.follower.x or not self.plaque.y == self.follower.y:
+            self.plaque.image = pygame.image.load('sprites\plaques\plaque_non_pressé.png').convert_alpha()
             self.activationCamera = True
 
 
@@ -376,8 +411,12 @@ class Game:
             self.view2.image.fill(GREEN)
             self.view2.image.set_alpha(125)
 
-<<<<<<< HEAD
-=======
+            self.view3.image.fill(GREEN)
+            self.view3.image.set_alpha(125)
+
+            self.view4.image.fill(GREEN)
+            self.view4.image.set_alpha(125)
+
         if self.activationCamera == True:
             if self.camera.facing == "up":
                 IMAGE = pygame.image.load('sprites/camera/camera_detecté/camera_up.png').convert_alpha()
@@ -394,8 +433,14 @@ class Game:
             self.view2.image.fill(RED)
             self.view2.image.set_alpha(125)
 
+            self.view3.image.fill(RED)
+            self.view3.image.set_alpha(125)
 
->>>>>>> 81df2ec5409e5d0244835463a2eb61fbb2833a47
+            self.view4.image.fill(RED)
+            self.view4.image.set_alpha(125)
+
+
+
     def death(self):
         # méthode faisant mourrir le joueur au besoin
         if self.alive == False:
@@ -435,8 +480,15 @@ class Game:
     def winPlayer(self):
         if self.door.x == self.player.x and self.door.y == self.player.y:
             print("win !")
+            global levelCount
+            levelCount += 1
+
             global level
-            level = 'level2.txt'
+            if levelCount == 2:
+                level = 'level2.txt'
+            elif levelCount == 3:
+                level = 'level3.txt'
+
             print(level)
             game2 = Game()
             while True:
