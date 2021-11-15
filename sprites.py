@@ -43,11 +43,25 @@ class Player(pygame.sprite.Sprite):
 
 
 class Door(pygame.sprite.Sprite):
-    def __init__(self,game, x, y):
+    def __init__(self,game, x, y, facing):
         self.game = game
-        self.groups = game.allSprites
+        self.groups = game.allSprites, game.doors
         pygame.sprite.Sprite.__init__(self, self.groups)
+<<<<<<< HEAD
         self.image = pygame.image.load('Tiles/images/Tilemap_20.png')
+=======
+        self.facing = facing
+        if self.facing == "up":
+            IMAGE = pygame.image.load('sprites/porte/porte_up.png').convert_alpha()
+        elif self.facing == "down":
+            IMAGE = pygame.image.load('sprites/porte/porte_down.png').convert_alpha()
+        elif self.facing == "right":
+            IMAGE = pygame.image.load('sprites/porte/porte_right.png').convert_alpha()
+        elif self.facing == "left":
+            IMAGE = pygame.image.load('sprites/porte/porte_left.png').convert_alpha()
+
+        self.image = IMAGE
+>>>>>>> 81df2ec5409e5d0244835463a2eb61fbb2833a47
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -114,47 +128,38 @@ class View(pygame.sprite.Sprite):
         self.rect.y = self.y * TILESIZE
 
 class Wall(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, wfacing):
         self.game = game
         self.groups = game.allSprites, game.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pygame.image.load('sprites/wall.png')
+        self.Wallfacing = wfacing
+        self.image = pygame.image.load('Tiles/images/Wallref.png')
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
-        if self.x == 0:
-            if self.y == 0:
-                self.image = pygame.image.load('sprites/murs/mur_upleft.png')
-            elif self.y > ((HEIGHT / TILESIZE)-2):
-                self.image = pygame.image.load('sprites/murs/mur_downleft.png')
-            else:
-                self.image = pygame.image.load('sprites/murs/mur_left.png')
-        elif self.y == 0:
-            if self.x == 0:
-                self.image = pygame.image.load('sprites/murs/mur_upleft.png')
-            elif self.x > ((WIDTH / TILESIZE)-2):
-                self.image = pygame.image.load('sprites/murs/mur_upright.png')
-            else:
-                self.image = pygame.image.load('sprites/murs/mur_up.png')
-        elif self.x > ((WIDTH / TILESIZE)-2):
-            if self.y == 0:
-                self.image = pygame.image.load('sprites/murs/mur_upleft.png')
-            elif self.y > ((HEIGHT / TILESIZE)-2):
-                self.image = pygame.image.load('sprites/murs/mur_downright.png')
-            else:
-                self.image = pygame.image.load('sprites/murs/mur_right.png')
-        elif self.y > ((HEIGHT / TILESIZE)-2):
-            if self.x == 0:
-                self.image = pygame.image.load('sprites/murs/mur_downleft.png')
-            elif self.x > ((WIDTH / TILESIZE)-2):
-                self.image = pygame.image.load('sprites/murs/mur_downright.png')
-            else:
-                self.image = pygame.image.load('sprites/murs/mur_down.png')
-        else:
-            self.image.fill((165,165,165))
+        if self.Wallfacing == "up":
+            self.image = pygame.image.load('Tiles/images/Wallref.png').convert_alpha()
+        elif self.Wallfacing == "right":
+            self.image = pygame.image.load('sprites/murs/mur_right.png').convert_alpha()
+        elif self.Wallfacing == "left":
+            self.image = pygame.image.load('sprites/murs/mur_left.png').convert_alpha()
+        elif self.Wallfacing == "uright":
+            self.image = pygame.image.load('sprites/murs/mur_upright.png').convert_alpha()
+        elif self.Wallfacing == "uleft":
+            self.image = pygame.image.load('sprites/murs/mur_upleft.png').convert_alpha()
+        elif self.Wallfacing == "dright":
+            self.image = pygame.image.load('Tiles/images/mur_downright1.png').convert_alpha()
+        elif self.Wallfacing == "dleft":
+            self.image = pygame.image.load('Tiles/images/mur_downleft1.png').convert_alpha()
+        elif self.Wallfacing == "alt":
+            self.image = pygame.image.load('sprites/murs/mur_up.png').convert_alpha()
+        elif self.Wallfacing == "inter1":
+            self.image = pygame.image.load('Tiles/images/mur_inter.png').convert_alpha()
+        elif self.Wallfacing == "inter2":
+            self.image = pygame.image.load('Tiles/images/mur_inter2.png').convert_alpha()
 
 class Titre(pygame.sprite.Sprite):
     def __init__(self, game, x, y,):
