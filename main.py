@@ -128,7 +128,6 @@ class Game:
 
                 if tile == 'p':
                     self.player = Player(self, colone, row)
-<<<<<<< HEAD
                 if tile == '[':
                     self.wall = Wall(self,colone, row, "left")
                 if tile == ']':
@@ -147,15 +146,6 @@ class Game:
                     self.wall = Wall(self,colone, row, "inter1")
                 if tile == '>':
                     self.wall = Wall(self,colone, row, "inter2")
-=======
-                
-                if tile == 'b':
-                    self.box = Box(self,colone, row)
-                    
-                if tile == 'u':
-                    self.bouton = Bouton(self,colone, row, "up")
-                    
->>>>>>> ee65efba781cc57dde427dac9cfc41c518714354
 
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
