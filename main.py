@@ -32,7 +32,7 @@ class Game:
         for row, tiles in enumerate(self.mapData):
             for colone, tile in enumerate(tiles):
                 if tile == 'w':
-                    self.wall = Wall(self,colone, row)
+                    self.wall = Wall(self,colone, row, "w")
 
                 if tile == '8':
                     self.camera = Camera(self, colone, row, "up")
@@ -57,6 +57,24 @@ class Game:
 
                 if tile == 'p':
                     self.player = Player(self, colone, row)
+                if tile == '[':
+                    self.wall = Wall(self,colone, row, "left")
+                if tile == ']':
+                    self.wall = Wall(self,colone, row, "right")
+                if tile == '/':
+                    self.wall = Wall(self,colone, row, "uleft")
+                if tile == '+':
+                    self.wall = Wall(self,colone, row, "uright")
+                if tile == '{':
+                    self.wall = Wall(self,colone, row, "dleft")
+                if tile == '}':
+                    self.wall = Wall(self,colone, row, "dright")
+                if tile == 'a':
+                    self.wall = Wall(self,colone, row, "alt")
+                if tile == '<':
+                    self.wall = Wall(self,colone, row, "inter1")
+                if tile == '>':
+                    self.wall = Wall(self,colone, row, "inter2")
 
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
@@ -76,7 +94,7 @@ class Game:
         for row, tiles in enumerate(self.mapData):
             for colone, tile in enumerate(tiles):
                 if tile == 'w':
-                    self.wall = Wall(self,colone, row)
+                    self.wall = Wall(self,colone, row, "w")
 
                 if tile == '8':
                     self.camera = Camera(self, colone, row, "up")
@@ -101,6 +119,24 @@ class Game:
 
                 if tile == 'p':
                     self.player = Player(self, colone, row)
+                if tile == '[':
+                    self.wall = Wall(self,colone, row, "left")
+                if tile == ']':
+                    self.wall = Wall(self,colone, row, "right")
+                if tile == '/':
+                    self.wall = Wall(self,colone, row, "uleft")
+                if tile == '+':
+                    self.wall = Wall(self,colone, row, "uright")
+                if tile == '{':
+                    self.wall = Wall(self,colone, row, "dleft")
+                if tile == '}':
+                    self.wall = Wall(self,colone, row, "dright")
+                if tile == 'a':
+                    self.wall = Wall(self,colone, row, "alt")
+                if tile == '<':
+                    self.wall = Wall(self,colone, row, "inter1")
+                if tile == '>':
+                    self.wall = Wall(self,colone, row, "inter2")
 
         self.view1 = View(self, 9, 15)
         self.view2 = View(self, 15, 16)
@@ -210,7 +246,7 @@ class Game:
         if self.plaque.x == self.player.x and self.plaque.y == self.player.y:
             print("plaque pressé")
             self.activationCamera = False
-            self.plaque.image = pygame.image.load('sprites\plaques\plaque_pressé.png').convert_alpha()
+            self.plaque.image = pygame.image.load('sprites/plaques/plaque_non_pressé.png').convert_alpha()
 
 
     def desactivateCameras(self):
