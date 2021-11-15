@@ -221,6 +221,19 @@ class PressEnter(pygame.sprite.Sprite):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
+class MessageTNR(pygame.sprite.Sprite):
+    def __init__(self, game, x, y,):
+        self.groups = game.allSprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image = pygame.image.load('sprites\msg_tnr.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
 class Plaque(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.allSprites
@@ -284,43 +297,6 @@ class Bouton(pygame.sprite.Sprite):
     def update(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
-
-class Follower(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
-        self.game = game
-        self.groups = game.allSprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/Follower.png')
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-
-    def move(self, directionX=0, directionY=0):
-        if not self.collideWall(directionX, directionY) and not self.collideCamera(directionX, directionY):
-            self.x += directionX
-            self.y += directionY
-
-    def update(self):
-        self.rect.x = self.x * TILESIZE
-        self.rect.y = self.y * TILESIZE
-
-    def collideWall(self, directionX=0, directionY=0):
-        for wall in self.game.walls:
-            if wall.x == self.x + directionX and wall.y == self.y + directionY:
-                return True
-        return False
-
-    def collideCamera(self, directionX=0, directionY=0):
-        for camera in self.game.cameras:
-            if camera.x == self.x + directionX and camera.y == self.y + directionY:
-                return True
-        return False
-
-    def push(self):
-        for box in self.game.boxes:
-            if box.x == self.x and box.y == self.y:
-                return True
-        return False
 
 
 

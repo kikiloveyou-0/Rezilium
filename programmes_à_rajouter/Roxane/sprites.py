@@ -12,6 +12,8 @@ class Player(pygame.sprite.Sprite):
         self.x = x
         self.y = y
 
+
+
     def move(self, directionX=0, directionY=0):
         if not self.collideWall(directionX, directionY) and not self.collideCamera(directionX, directionY):
             self.x += directionX
@@ -33,6 +35,13 @@ class Player(pygame.sprite.Sprite):
                 return True
         return False
 
+
+    '''def collideDoor(self, directionX=0, directionY=0):
+        for door in self.game.door:
+            if door.x == self.x + directionX and door.y == self.y + directionY:
+                return True
+        return False'''
+
     def push(self):
         for box in self.game.boxes:
             if box.x == self.x and box.y == self.y:
@@ -40,14 +49,25 @@ class Player(pygame.sprite.Sprite):
         return False
 
 
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+
 
 
 class Door(pygame.sprite.Sprite):
-    def __init__(self,game, x, y):
+    def __init__(self, game, x, y, facing):
+        self.groups = game.allSprites, game.door
         self.game = game
-        self.groups = game.allSprites
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/porte/porte_down.png')
+        self.facing = facing
+        if self.facing == "up":
+            IMAGE = pygame.image.load('sprites/porte/porte_up.png').convert_alpha()
+        elif self.facing == "down":
+            IMAGE = pygame.image.load('sprites/porte/porte_down.png').convert_alpha()
+
+        self.image = IMAGE
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -269,6 +289,13 @@ class Box(pygame.sprite.Sprite):
         return False
 
 
+    '''def collideDoor(self, directionX=0, directionY=0):
+        for door in self.game.door:
+            if door.x == self.x + directionX and door.y == self.y + directionY:
+                return True
+        return False'''
+
+
 class Bouton(pygame.sprite.Sprite):
     def __init__(self, game, x, y, facing):
         self.groups = game.allSprites
@@ -284,43 +311,6 @@ class Bouton(pygame.sprite.Sprite):
     def update(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
-
-class Follower(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
-        self.game = game
-        self.groups = game.allSprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = pygame.image.load('sprites/Follower.png')
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-
-    def move(self, directionX=0, directionY=0):
-        if not self.collideWall(directionX, directionY) and not self.collideCamera(directionX, directionY):
-            self.x += directionX
-            self.y += directionY
-
-    def update(self):
-        self.rect.x = self.x * TILESIZE
-        self.rect.y = self.y * TILESIZE
-
-    def collideWall(self, directionX=0, directionY=0):
-        for wall in self.game.walls:
-            if wall.x == self.x + directionX and wall.y == self.y + directionY:
-                return True
-        return False
-
-    def collideCamera(self, directionX=0, directionY=0):
-        for camera in self.game.cameras:
-            if camera.x == self.x + directionX and camera.y == self.y + directionY:
-                return True
-        return False
-
-    def push(self):
-        for box in self.game.boxes:
-            if box.x == self.x and box.y == self.y:
-                return True
-        return False
 
 
 
