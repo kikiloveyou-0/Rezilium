@@ -452,7 +452,7 @@ class Game:
 
     def mouvementFollower(self):
         # mouvements du follower implementées grâce à une FILE
-        if len(self.fileFollower.couloir) == 2:
+        if len(self.fileFollower.couloir) >= 2:
             if self.fileFollower.couloir[0] == "left":
                 self.follower.move(directionX=-1)
                 if self.follower.push():
@@ -488,6 +488,22 @@ class Game:
                 level = 'level2.txt'
             elif levelCount == 3:
                 level = 'level3.txt'
+            elif levelCount == 4:
+                level = 'level4.txt'
+            elif levelCount == 5:
+                level = 'level5.txt'
+            elif levelCount == 6:
+                level = 'level6.txt'
+            elif levelCount == 7:
+                self.end = End(self, 11, 10)
+                pygame.time.delay(2000)
+                level = 'level1.txt'
+                levelCount = 1
+                game = Game()
+                while True:
+                    game.new()
+                    game.run()
+
 
             print(level)
             game2 = Game()
